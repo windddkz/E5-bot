@@ -31,18 +31,14 @@ jobs:
         CONFIG_ID: ${{ secrets.CONFIG_ID }}
         CONFIG_SECRET: ${{ secrets.CONFIG_SECRET }}
       run: | 
-        cp api_bot.py api_bot_tmp.py
         echo $CONFIG_ID > client_id.txt
         echo $CONFIG_KEY > secret.txt
-        sed -i '36 r client_id.txt' api_bot_tmp.py
-        sed -i '37 r secret.txt' api_bot_tmp.py
     - name: Test Api
       run: | 
         echo `date +"%Y-%m-%d %H:%M:%S"` begin > time.log
-        python api_bot_tmp.py
+        python api_bot.py
     - name: Delete secrets config
       run: | 
-        rm -f api_bot_tmp.py
         rm -f client_id.txt
         rm -f secret.txt    
     - name: Commit # upload new refresh token
