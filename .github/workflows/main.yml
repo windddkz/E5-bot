@@ -33,7 +33,7 @@ jobs:
       run: | 
         python api_bot.py
     - name: Commit and push # update new refresh token
-    - uses: matheusalbino/git-commit@v1.0.1
+      uses: matheusalbino/git-commit@v1.0.1
       with:
         user-name: tokenbot
         user-email: tokenbot@email.com
