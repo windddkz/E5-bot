@@ -26,24 +26,12 @@ jobs:
     - name: Install requests
       run: |
         pip install -r requirements.txt
-    # - name: Read config from secrets
-    #   env: 
-    #     CONFIG_ID: ${{ secrets.CONFIG_ID }}
-    #     CONFIG_SECRET: ${{ secrets.CONFIG_SECRET }}
-      # run: | 
-      #   echo $CONFIG_ID > client_id
-      #   echo $CONFIG_SECRET > secret
     - name: Test Api
       env: 
         CONFIG_ID: ${{ secrets.CONFIG_ID }}
         CONFIG_SECRET: ${{ secrets.CONFIG_SECRET }}
       run: | 
-        # echo `date +"%Y-%m-%d %H:%M:%S"` begin > time.log
         python api_bot.py
-    # - name: Delete secrets config
-    #   run: | 
-    #     rm -f client_id
-    #     rm -f secret    
     - name: Commit and push # update new refresh token
     - uses: matheusalbino/git-commit@v1.0.1
       with:
