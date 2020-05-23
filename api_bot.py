@@ -33,6 +33,8 @@ def check_onedrive(account):
 
 
 if __name__ == "__main__":
+
+
     credentials = (client_id, secret)
 
     scopes = ['basic', 'message_all', 'onedrive_all']
