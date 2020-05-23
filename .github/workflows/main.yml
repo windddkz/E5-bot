@@ -43,8 +43,8 @@ jobs:
         rm -f secret    
     - name: Commit # upload new refresh token
       run: |
-        git config --global user.email windddk@163.com
-        git config --global user.name windddk
+        git config --global user.email tokenbot@email.com
+        git config --global user.name tokenbot
         git add .
         git commit -m "update new refresh_token" -a
     - name: Push changes
