@@ -34,17 +34,8 @@ def check_onedrive(account):
 
 
 if __name__ == "__main__":
-    client_id = None
-    secret = None
-    # with open("client_id", "r") as f:
-    #     client_id = f.read()
-    # with open("secret", "r") as f:
-    #     secret = f.read()
     client_id = os.environ['CONFIG_ID']
     secret = os.environ['CONFIG_SECRET']
-    if client_id is None or secret is None:
-        print("client_id or secret read failed...")
-        exit()
     credentials = (client_id, secret)
 
     scopes = ['basic', 'message_all', 'onedrive_all']
