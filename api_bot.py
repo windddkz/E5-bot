@@ -1,5 +1,14 @@
 import os
+from datetime import datetime,timezone,timedelta
 from O365 import Account
+
+
+def get_datetime():
+    dt = datetime.utcnow()
+    dt = dt.replace(tzinfo=timezone.utc)
+    tzutc_8 = timezone(timedelta(hours=8))
+    local_dt = dt.astimezone(tzutc_8)
+    return local_dt
 
 
 def check_mailbox(account):
@@ -16,7 +25,7 @@ def send_notify_email(account, content):
     m = account.new_message()
     m.to.add(os.environ["NOTIFY_EMAIL"])
     m.subject = 'Testing E5-bot'
-    m.body = "This is a test email from github workflow, check it please" + "\r\n" + content
+    m.body = "This is a test email from github workflow, check it please" + "<br>" + content
     m.send()
     print("send email done...")
 
@@ -28,7 +37,7 @@ def check_onedrive(account):
     root_folder = my_drive.get_root_folder()
     onedrive_contents = ""
     for item in root_folder.get_items(limit=25):
-        onedrive_contents += str(item) + "\r\n"
+        onedrive_contents += str(item) + "<br>"
     print("check onedrive done")
     return onedrive_contents
 
@@ -45,5 +54,8 @@ if __name__ == "__main__":
 
     check_mailbox(account)
     content = check_onedrive(account)
-    send_notify_email(account, content)
 
+    ldt = get_datetime()
+    if ldt.hour == 9 and ldt.day == 5:
+        content += "and don't forget to pay credit card bill <br>"
+    send_notify_email(account, content)
