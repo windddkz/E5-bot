@@ -58,4 +58,4 @@ if __name__ == "__main__":
     ldt = get_datetime()
     if ldt.hour == 9 and ldt.day == 5:
         content += "and don't forget to pay credit card bill <br>"
-    send_notify_email(account, content)
+        send_notify_email(account, content)
