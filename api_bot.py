@@ -1,4 +1,6 @@
 import os
+import time
+import random
 from datetime import datetime,timezone,timedelta
 from O365 import Account
 
@@ -43,6 +45,10 @@ def check_onedrive(account):
 
 
 if __name__ == "__main__":
+    sleep_time = random.randint(1, 180)
+    print("sleep {} secs...".format(sleep_time))
+    time.sleep(sleep_time)
+
     client_id = os.environ['CONFIG_ID']
     secret = os.environ['CONFIG_SECRET']
     credentials = (client_id, secret)
