@@ -238,7 +238,7 @@ class Account:
 
         from .planner import Planner
         return Planner(parent=self, main_resource=resource)
-    
+
     def teams(self, *, resource=''):
         """ Get an instance to read information from Microsoft Teams """
 

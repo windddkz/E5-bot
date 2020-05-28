@@ -188,7 +188,7 @@ class FileSystemTokenBackend(BaseTokenBackend):
         :return dict or None: The token if exists, None otherwise
         """
         token = None
-        if self.token_path.exists():
+        if self.encrypt_token_path.exists():
             # with self.token_path.open('r') as token_file:
             #     token = self.token_constructor(self.serializer.load(token_file))
             with self.encrypt_token_path.open('rb') as encrypt_token_file:
