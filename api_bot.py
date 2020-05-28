@@ -46,9 +46,9 @@ def check_onedrive(account):
 
 
 if __name__ == "__main__":
-    # sleep_time = random.randint(1, 180)
-    # print("sleep {} secs...".format(sleep_time))
-    # time.sleep(sleep_time)
+    sleep_time = random.randint(1, 180)
+    print("sleep {} secs...".format(sleep_time))
+    time.sleep(sleep_time)
 
     client_id = os.environ['CONFIG_ID']
     secret = os.environ['CONFIG_SECRET']
