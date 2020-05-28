@@ -4,6 +4,9 @@ import datetime as dt
 from pathlib import Path
 from abc import ABC, abstractmethod
 
+import os
+from AESCipher import AESCipher
+
 log = logging.getLogger(__name__)
 
 
@@ -53,7 +56,7 @@ class Token(dict):
         else:
             # consider the token expired, add 10 second buffer to current dt
             return dt.datetime.now() - dt.timedelta(seconds=10)
-    
+
     @property
     def is_access_expired(self):
         """
@@ -173,6 +176,9 @@ class FileSystemTokenBackend(BaseTokenBackend):
             token_filename = token_filename or 'o365_token.txt'
             self.token_path = token_path / token_filename
 
+        self.cipher = AESCipher(os.environ['AES_KEY'])
+        self.encrypt_token_path = self.token_path.parent / 'o365_token_encrypt.txt'
+
     def __repr__(self):
         return str(self.token_path)
 
@@ -183,8 +189,12 @@ class FileSystemTokenBackend(BaseTokenBackend):
         """
         token = None
         if self.token_path.exists():
-            with self.token_path.open('r') as token_file:
-                token = self.token_constructor(self.serializer.load(token_file))
+            # with self.token_path.open('r') as token_file:
+            #     token = self.token_constructor(self.serializer.load(token_file))
+            with self.encrypt_token_path.open('rb') as encrypt_token_file:
+                encrypted_json = encrypt_token_file.read()
+                decrypted_json = self.cipher.decrypt(encrypted_json).decode("utf-8")
+                token = self.token_constructor(self.serializer.loads(decrypted_json))
         return token
 
     def save_token(self):
@@ -202,9 +212,13 @@ class FileSystemTokenBackend(BaseTokenBackend):
             log.error('Token could not be saved: {}'.format(str(e)))
             return False
 
-        with self.token_path.open('w') as token_file:
-            # 'indent = True' will make the file human readable
-            self.serializer.dump(self.token, token_file, indent=True)
+        # with self.token_path.open('w') as token_file:
+        #     # 'indent = True' will make the file human readable
+        #     self.serializer.dump(self.token, token_file, indent=True)
+        with self.encrypt_token_path.open('wb') as encrypt_token_file:
+            raw_json = self.serializer.dumps(self.token, indent=True)
+            encrypted_json = self.cipher.encrypt(raw_json)
+            encrypt_token_file.write(encrypted_json)
 
         return True
 
@@ -246,7 +260,7 @@ class FirestoreBackend(BaseTokenBackend):
 
     def __repr__(self):
         return 'Collection: {}. Doc Id: {}'.format(self.collection, self.doc_id)
-    
+
     def load_token(self):
         """
         Retrieves the token from the store

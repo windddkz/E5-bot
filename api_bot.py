@@ -40,14 +40,15 @@ def check_onedrive(account):
     onedrive_contents = ""
     for item in root_folder.get_items(limit=25):
         onedrive_contents += str(item) + "<br>"
+        print(item)
     print("check onedrive done")
     return onedrive_contents
 
 
 if __name__ == "__main__":
-    sleep_time = random.randint(1, 180)
-    print("sleep {} secs...".format(sleep_time))
-    time.sleep(sleep_time)
+    # sleep_time = random.randint(1, 180)
+    # print("sleep {} secs...".format(sleep_time))
+    # time.sleep(sleep_time)
 
     client_id = os.environ['CONFIG_ID']
     secret = os.environ['CONFIG_SECRET']
