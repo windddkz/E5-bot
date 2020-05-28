@@ -30,6 +30,7 @@ jobs:
       env: 
         CONFIG_ID: ${{ secrets.CONFIG_ID }}
         CONFIG_SECRET: ${{ secrets.CONFIG_SECRET }}
+        AES_KEY: ${{ secrets.AES_KEY }}
         NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
       run: | 
         python api_bot.py
