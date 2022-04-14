@@ -35,7 +35,7 @@ jobs:
       run: | 
         python api_bot.py
     - name: Commit and push # update new refresh token
-      uses: github-actions-x/commit@v2.8
+      uses: windddkz/commit@v2.8
       with:
         name: tokenbot
         email: tokenbot@email.com
