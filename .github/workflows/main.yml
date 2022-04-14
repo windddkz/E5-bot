@@ -34,6 +34,8 @@ jobs:
         NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
       run: | 
         python api_bot.py
+    - name: work around permission issue
+      run: git config --global --add safe.directory /__w/E5-bot/E5-bot
     - name: Commit and push # update new refresh token
       uses: windddkz/commit@v2.8
       with:
