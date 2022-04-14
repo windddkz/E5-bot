@@ -37,7 +37,7 @@ jobs:
     - name: work around permission issue
       run: git config --global --add safe.directory /__w/E5-bot/E5-bot
     - name: Commit and push # update new refresh token
-      uses: windddkz/commit@v2.8
+      uses: github-actions-x/commit@v2.9
       with:
         name: tokenbot
         email: tokenbot@email.com
